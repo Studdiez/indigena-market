@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --wisdom-red: #B51D19;
+  --golden-sun: #FDB910;
+  --deep-earth: #1A1A1A;
+  --sacred-green: #2A5C3E;
+  --surface: #242424;
+  --surface-light: #2E2E2E;
+  --border-dim: #333333;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
+}
+
+body {
+  background-color: var(--deep-earth);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--deep-earth);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(181, 29, 25, 0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(181, 29, 25, 0.15); }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+/* Gradient overlays */
+.gradient-red { background: linear-gradient(135deg, var(--wisdom-red), #8B1515); }
+.gradient-gold { background: linear-gradient(135deg, var(--golden-sun), #E5A200); }
+.gradient-green { background: linear-gradient(135deg, var(--sacred-green), #1E4430); }
+
+/* Card hover */
+.nft-card {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.nft-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}

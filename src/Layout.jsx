@@ -17,16 +17,27 @@ import {
   BarChart3,
   Heart,
   Settings,
-  Users
+  Users,
+  BookOpen,
+  MapPin,
+  TreePine,
+  Shield
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_ITEMS = [
-  { name: "Discover", page: "Discover", icon: Compass },
-  { name: "Artists", page: "Artists", icon: Users },
-  { name: "Create", page: "Mint", icon: PlusCircle },
-  { name: "Dashboard", page: "ArtistDashboard", icon: BarChart3 },
-  { name: "Portfolio", page: "CollectorDashboard", icon: Layers },
+  { name: "Discover", page: "Discover", icon: Compass, category: "main" },
+  { name: "Digital Art", page: "Discover", icon: Sparkles, category: "marketplace" },
+  { name: "Physical Items", page: "PhysicalMarket", icon: Layers, category: "marketplace" },
+  { name: "Courses", page: "Courses", icon: BookOpen, category: "marketplace" },
+  { name: "Services", page: "Services", icon: User, category: "marketplace" },
+  { name: "Tourism", page: "Tourism", icon: MapPin, category: "marketplace" },
+  { name: "Language", page: "Language", icon: BookOpen, category: "marketplace" },
+  { name: "Land & Food", page: "LandFood", icon: TreePine, category: "marketplace" },
+  { name: "Materials", page: "Materials", icon: Settings, category: "marketplace" },
+  { name: "Advocacy", page: "Advocacy", icon: Shield, category: "community" },
+  { name: "Artists", page: "Artists", icon: Users, category: "main" },
+  { name: "Dashboard", page: "ArtistDashboard", icon: BarChart3, category: "main" },
 ];
 
 export default function Layout({ children, currentPageName }) {
@@ -57,13 +68,14 @@ export default function Layout({ children, currentPageName }) {
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 p-4 space-y-1">
-          {NAV_ITEMS.map((item) => {
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+          {/* Main */}
+          {NAV_ITEMS.filter(i => i.category === "main").map((item) => {
             const Icon = item.icon;
             const active = isActive(item.page);
             return (
               <Link
-                key={item.page}
+                key={item.page + item.name}
                 to={createPageUrl(item.page)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   active
@@ -74,6 +86,49 @@ export default function Layout({ children, currentPageName }) {
                 <Icon className={`w-5 h-5 ${active ? "text-[#B51D19]" : ""}`} />
                 {item.name}
                 {active && <ChevronRight className="w-4 h-4 ml-auto" />}
+              </Link>
+            );
+          })}
+          
+          {/* Marketplace */}
+          <div className="pt-4 pb-2">
+            <p className="px-4 text-[10px] uppercase tracking-widest text-gray-600 font-semibold">10 Pillars</p>
+          </div>
+          {NAV_ITEMS.filter(i => i.category === "marketplace").map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.page);
+            return (
+              <Link
+                key={item.page + item.name}
+                to={createPageUrl(item.page)}
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${
+                  active
+                    ? "bg-[#B51D19]/15 text-[#B51D19]"
+                    : "text-gray-500 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <Icon className={`w-4 h-4 ${active ? "text-[#B51D19]" : ""}`} />
+                {item.name}
+              </Link>
+            );
+          })}
+          
+          {/* Community */}
+          {NAV_ITEMS.filter(i => i.category === "community").map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.page);
+            return (
+              <Link
+                key={item.page + item.name}
+                to={createPageUrl(item.page)}
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${
+                  active
+                    ? "bg-[#B51D19]/15 text-[#B51D19]"
+                    : "text-gray-500 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <Icon className={`w-4 h-4 ${active ? "text-[#B51D19]" : ""}`} />
+                {item.name}
               </Link>
             );
           })}
@@ -162,7 +217,7 @@ export default function Layout({ children, currentPageName }) {
 
       {/* Mobile Bottom Nav */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-20 bg-[#1A1A1A]/95 backdrop-blur-lg border-t border-[#333] z-50 flex items-center justify-around px-2 pb-safe">
-        {NAV_ITEMS.slice(0, 5).map((item) => {
+        {NAV_ITEMS.filter(i => i.category === "main").slice(0, 4).map((item) => {
           const Icon = item.icon;
           const active = isActive(item.page);
           return (
@@ -178,6 +233,10 @@ export default function Layout({ children, currentPageName }) {
             </Link>
           );
         })}
+        <button className="flex flex-col items-center gap-1 px-3 py-2 text-gray-500" onClick={() => setMobileMenuOpen(true)}>
+          <Menu className="w-5 h-5" />
+          <span className="text-[10px] font-medium">More</span>
+        </button>
       </nav>
 
       {/* Main Content */}

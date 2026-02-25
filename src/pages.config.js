@@ -47,24 +47,24 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import Discover from './pages/Discover';
+import ArtistDashboard from './pages/ArtistDashboard';
+import ArtistProfile from './pages/ArtistProfile';
 import Artists from './pages/Artists';
+import CollectorDashboard from './pages/CollectorDashboard';
+import Discover from './pages/Discover';
 import Mint from './pages/Mint';
 import NFTDetail from './pages/NFTDetail';
-import ArtistProfile from './pages/ArtistProfile';
-import ArtistDashboard from './pages/ArtistDashboard';
-import CollectorDashboard from './pages/CollectorDashboard';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Discover": Discover,
+    "ArtistDashboard": ArtistDashboard,
+    "ArtistProfile": ArtistProfile,
     "Artists": Artists,
+    "CollectorDashboard": CollectorDashboard,
+    "Discover": Discover,
     "Mint": Mint,
     "NFTDetail": NFTDetail,
-    "ArtistProfile": ArtistProfile,
-    "ArtistDashboard": ArtistDashboard,
-    "CollectorDashboard": CollectorDashboard,
 }
 
 export const pagesConfig = {

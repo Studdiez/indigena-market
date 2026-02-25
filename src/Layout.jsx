@@ -27,6 +27,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_ITEMS = [
   { name: "Discover", page: "Discover", icon: Compass, category: "main" },
+  { name: "SEVA Hub", page: "SevaHub", icon: Heart, category: "main" },
+  { name: "Artists", page: "Artists", icon: Users, category: "main" },
+  { name: "Creator Hub", page: "CreatorDashboard", icon: BarChart3, category: "creator" },
   { name: "Digital Art", page: "Discover", icon: Sparkles, category: "marketplace" },
   { name: "Physical Items", page: "PhysicalMarket", icon: Layers, category: "marketplace" },
   { name: "Courses", page: "Courses", icon: BookOpen, category: "marketplace" },
@@ -35,9 +38,7 @@ const NAV_ITEMS = [
   { name: "Language", page: "Language", icon: BookOpen, category: "marketplace" },
   { name: "Land & Food", page: "LandFood", icon: TreePine, category: "marketplace" },
   { name: "Materials", page: "Materials", icon: Settings, category: "marketplace" },
-  { name: "Advocacy", page: "Advocacy", icon: Shield, category: "community" },
-  { name: "Artists", page: "Artists", icon: Users, category: "main" },
-  { name: "Dashboard", page: "ArtistDashboard", icon: BarChart3, category: "main" },
+  { name: "Advocacy", page: "Advocacy", icon: Shield, category: "marketplace" },
 ];
 
 export default function Layout({ children, currentPageName }) {
@@ -113,8 +114,11 @@ export default function Layout({ children, currentPageName }) {
             );
           })}
           
-          {/* Community */}
-          {NAV_ITEMS.filter(i => i.category === "community").map((item) => {
+          {/* Creator Hub */}
+          <div className="pt-4 pb-2">
+            <p className="px-4 text-[10px] uppercase tracking-widest text-gray-600 font-semibold">For Artists</p>
+          </div>
+          {NAV_ITEMS.filter(i => i.category === "creator").map((item) => {
             const Icon = item.icon;
             const active = isActive(item.page);
             return (
@@ -123,11 +127,11 @@ export default function Layout({ children, currentPageName }) {
                 to={createPageUrl(item.page)}
                 className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${
                   active
-                    ? "bg-[#B51D19]/15 text-[#B51D19]"
+                    ? "bg-[#FDB910]/15 text-[#FDB910]"
                     : "text-gray-500 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <Icon className={`w-4 h-4 ${active ? "text-[#B51D19]" : ""}`} />
+                <Icon className={`w-4 h-4 ${active ? "text-[#FDB910]" : ""}`} />
                 {item.name}
               </Link>
             );

@@ -62,6 +62,10 @@ import Language from './pages/Language';
 import LandFood from './pages/LandFood';
 import Materials from './pages/Materials';
 import Advocacy from './pages/Advocacy';
+import CreatorDashboard from './pages/CreatorDashboard';
+import CreatorAddListing from './pages/CreatorAddListing';
+import SevaHub from './pages/SevaHub';
+import SevaProject from './pages/SevaProject';
 import __Layout from './Layout.jsx';
 
 
@@ -81,6 +85,10 @@ export const PAGES = {
     "LandFood": LandFood,
     "Materials": Materials,
     "Advocacy": Advocacy,
+    "CreatorDashboard": CreatorDashboard,
+    "CreatorAddListing": CreatorAddListing,
+    "SevaHub": SevaHub,
+    "SevaProject": SevaProject,
 }
 
 export const pagesConfig = {

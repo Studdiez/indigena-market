@@ -54,6 +54,14 @@ import CollectorDashboard from './pages/CollectorDashboard';
 import Discover from './pages/Discover';
 import Mint from './pages/Mint';
 import NFTDetail from './pages/NFTDetail';
+import PhysicalMarket from './pages/PhysicalMarket';
+import Courses from './pages/Courses';
+import Services from './pages/Services';
+import Tourism from './pages/Tourism';
+import Language from './pages/Language';
+import LandFood from './pages/LandFood';
+import Materials from './pages/Materials';
+import Advocacy from './pages/Advocacy';
 import __Layout from './Layout.jsx';
 
 
@@ -65,6 +73,14 @@ export const PAGES = {
     "Discover": Discover,
     "Mint": Mint,
     "NFTDetail": NFTDetail,
+    "PhysicalMarket": PhysicalMarket,
+    "Courses": Courses,
+    "Services": Services,
+    "Tourism": Tourism,
+    "Language": Language,
+    "LandFood": LandFood,
+    "Materials": Materials,
+    "Advocacy": Advocacy,
 }
 
 export const pagesConfig = {

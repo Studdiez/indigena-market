@@ -88,9 +88,9 @@ function SectionHeader({ title, subtitle, linkPage }) {
         </h2>
         {subtitle && (
           <div className="flex items-center gap-1.5 mt-0.5">
-            <span style={{ color: "#FDB910", fontSize: 10 }}>—</span>
-            <span className="text-xs italic tracking-widest" style={{ color: "#FDB910" }}>{subtitle}</span>
-            <span style={{ color: "#FDB910", fontSize: 10 }}>—</span>
+            <span style={{ color: "#c8952a", fontSize: 10 }}>—</span>
+            <span className="text-xs italic tracking-widest" style={{ background: "linear-gradient(90deg, #c8952a, #f5d67a, #fdb910, #e8a800)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{subtitle}</span>
+            <span style={{ color: "#c8952a", fontSize: 10 }}>—</span>
           </div>
         )}
       </div>

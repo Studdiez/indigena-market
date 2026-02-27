@@ -140,6 +140,13 @@ export default function Discover() {
       <div className="relative flex flex-col items-center pt-10 pb-6 px-4"
         style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(181,29,25,0.28) 0%, transparent 70%)" }}>
 
+        <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="mb-4">
+          <img
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699cf7df7e22f660eaef5fef/8b105753d_Addaheading7.png"
+            alt="Indigena Market Logo"
+            className="w-28 h-28 object-contain drop-shadow-2xl"
+          />
+        </motion.div>
         <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           className="text-3xl font-black tracking-widest uppercase text-center"
           style={{ color: "#B51D19", fontFamily: "serif", letterSpacing: "0.18em" }}>

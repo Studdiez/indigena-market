@@ -30,8 +30,14 @@ export default function NFTDetail() {
   const { data: nft, isLoading } = useQuery({
     queryKey: ["nft", nftId],
     queryFn: async () => {
-      const results = await base44.entities.NFT.filter({ id: nftId });
-      return results[0];
+      // Try custom backend first, fall back to Base44
+      try {
+        const data = await nftApi.get({ id: nftId });
+        return data.nft || data;
+      } catch {
+        const results = await base44.entities.NFT.filter({ id: nftId });
+        return results[0];
+      }
     },
     enabled: !!nftId,
   });

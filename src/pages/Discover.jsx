@@ -185,7 +185,7 @@ export default function Discover() {
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)" }} />
             <div className="absolute bottom-3 left-3 right-3">
               <p className="text-white font-bold text-lg leading-tight">{FEATURED_ARTIST.name}</p>
-              <p className="text-xs mt-0.5" style={{ color: "#FDB910" }}>{FEATURED_ARTIST.nation}</p>
+              <p className="text-xs mt-0.5" style={{ background: "linear-gradient(90deg, #c8952a, #f5d67a, #fdb910)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{FEATURED_ARTIST.nation}</p>
               <Link to={createPageUrl("Artists")}>
                 <button className="mt-2 px-3 py-1 rounded-full text-xs font-semibold border"
                   style={{ borderColor: "#FDB910", color: "#FDB910", background: "rgba(0,0,0,0.4)" }}>

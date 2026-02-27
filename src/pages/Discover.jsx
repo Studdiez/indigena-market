@@ -276,25 +276,7 @@ export default function Discover() {
         </Link>
       </section>
 
-      {/* ── BOTTOM NAV ── */}
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full flex items-center justify-around px-6 py-3 z-50 border-t"
-        style={{ maxWidth: 480, background: "rgba(20,20,20,0.97)", backdropFilter: "blur(20px)", borderColor: "#2A2A2A" }}>
-        {[
-          { icon: Home,   label: "Home",    tab: "home",    page: "Discover" },
-          { icon: Search, label: "Search",  tab: "search",  page: "Discover" },
-          { icon: Heart,  label: "Saved",   tab: "saved",   page: "Discover" },
-          { icon: User,   label: "Profile", tab: "profile", page: "ArtistProfile" },
-        ].map(({ icon: Icon, label, tab, page }) => (
-          <Link key={tab} to={createPageUrl(page)}>
-            <button onClick={() => setActiveTab(tab)}
-              className="flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-all"
-              style={{ color: activeTab === tab ? "#FDB910" : "#6B7280" }}>
-              <Icon className="w-5 h-5" />
-              <span className="text-[10px] font-medium">{label}</span>
-            </button>
-          </Link>
-        ))}
-      </nav>
+
     </div>
   );
 }

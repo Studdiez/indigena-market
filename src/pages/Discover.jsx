@@ -134,7 +134,7 @@ export default function Discover() {
   });
 
   return (
-    <div className="min-h-screen pb-24 relative" style={{ background: "#1A1A1A", maxWidth: 480, margin: "0 auto" }}>
+    <div className="min-h-screen pb-24 relative" style={{ maxWidth: 480, margin: "0 auto", background: "#1A1A1A", backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E\")" }}>
 
       {/* ── HEADER ── */}
       <div className="relative flex flex-col items-center pt-10 pb-6 px-4"

@@ -270,7 +270,7 @@ export default function Discover() {
         <Link to={createPageUrl("Discover")}>
           <motion.button whileTap={{ scale: 0.97 }}
             className="w-full mt-4 py-3 rounded-full text-sm font-semibold border flex items-center justify-center gap-2"
-            style={{ borderColor: "#FDB910", color: "#FDB910", background: "transparent" }}>
+            style={{ borderColor: "#c8952a", color: "#f5d67a", background: "transparent" }}>
             View All <ChevronRight className="w-4 h-4" />
           </motion.button>
         </Link>

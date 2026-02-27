@@ -166,8 +166,12 @@ export default function NFTDetail() {
             </div>
 
             <div className="flex gap-3">
-              <Button className="flex-1 gradient-red rounded-xl h-12 text-base font-semibold">
-                Buy Now
+              <Button
+                className="flex-1 gradient-red rounded-xl h-12 text-base font-semibold"
+                onClick={() => buyMutation.mutate()}
+                disabled={buyMutation.isPending}
+              >
+                {buyMutation.isPending ? "Processing..." : buyMutation.isSuccess ? "Offer Sent!" : "Buy Now"}
               </Button>
               {user && (
                 <Button

@@ -51,6 +51,16 @@ export default function NFTDetail() {
     enabled: !!nftId && !!user?.email,
   });
 
+  const buyMutation = useMutation({
+    mutationFn: async () => {
+      return biddingApi.createOffer({
+        nft_id: nftId,
+        buyer_address: user?.wallet_address || user?.email,
+        price: nft?.price_indi,
+      });
+    },
+  });
+
   const wishlistMutation = useMutation({
     mutationFn: async () => {
       if (isWishlisted) {

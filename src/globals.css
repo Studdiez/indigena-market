@@ -18,6 +18,21 @@ body {
   background-color: var(--deep-earth);
   color: var(--text-primary);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Metallic gold utility */
+.metallic-gold {
+  background: linear-gradient(135deg, #c8952a 0%, #f5d67a 30%, #fdb910 50%, #e8a800 70%, #c8952a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.metallic-gold-bg {
+  background: linear-gradient(135deg, #c8952a 0%, #f5d67a 30%, #fdb910 50%, #e8a800 70%, #c8952a 100%);
 }
 
 /* Custom scrollbar */

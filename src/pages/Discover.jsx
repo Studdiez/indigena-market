@@ -154,9 +154,9 @@ export default function Discover() {
         </motion.h1>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           className="flex items-center gap-2 mt-1">
-          <span style={{ color: "#FDB910", fontSize: 11 }}>—</span>
-          <span className="text-sm font-semibold tracking-[0.3em] italic" style={{ color: "#FDB910" }}>Marketplace</span>
-          <span style={{ color: "#FDB910", fontSize: 11 }}>—</span>
+          <span style={{ color: "#c8952a", fontSize: 11 }}>—</span>
+          <span className="text-sm font-semibold tracking-[0.3em] italic" style={{ background: "linear-gradient(90deg, #c8952a, #f5d67a, #fdb910, #e8a800)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Marketplace</span>
+          <span style={{ color: "#c8952a", fontSize: 11 }}>—</span>
         </motion.div>
         <div className="flex items-center gap-2 mt-4">
           <div className="w-8 h-px" style={{ background: "#FDB910" }} />

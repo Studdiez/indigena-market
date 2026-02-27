@@ -108,9 +108,9 @@ function Divider() {
     <div className="flex items-center justify-center gap-2 my-2 px-5">
       <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, #333)" }} />
       <div className="flex items-center gap-1">
-        <div className="w-1 h-1 rounded-full" style={{ background: "#FDB910", opacity: 0.5 }} />
-        <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#FDB910", opacity: 0.8 }} />
-        <div className="w-1 h-1 rounded-full" style={{ background: "#FDB910", opacity: 0.5 }} />
+        <div className="w-1 h-1 rounded-full" style={{ background: "linear-gradient(135deg, #c8952a, #f5d67a)", opacity: 0.5 }} />
+        <div className="w-1.5 h-1.5 rounded-full" style={{ background: "linear-gradient(135deg, #f5d67a, #fdb910)", opacity: 0.9 }} />
+        <div className="w-1 h-1 rounded-full" style={{ background: "linear-gradient(135deg, #c8952a, #f5d67a)", opacity: 0.5 }} />
       </div>
       <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, #333)" }} />
     </div>

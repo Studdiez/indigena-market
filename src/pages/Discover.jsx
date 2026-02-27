@@ -188,7 +188,7 @@ export default function Discover() {
               <p className="text-xs mt-0.5" style={{ background: "linear-gradient(90deg, #c8952a, #f5d67a, #fdb910)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{FEATURED_ARTIST.nation}</p>
               <Link to={createPageUrl("Artists")}>
                 <button className="mt-2 px-3 py-1 rounded-full text-xs font-semibold border"
-                  style={{ borderColor: "#FDB910", color: "#FDB910", background: "rgba(0,0,0,0.4)" }}>
+                  style={{ borderColor: "#c8952a", color: "#f5d67a", background: "rgba(0,0,0,0.4)" }}>
                   View Profile
                 </button>
               </Link>

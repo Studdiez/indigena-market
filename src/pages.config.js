@@ -47,48 +47,48 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import Advocacy from './pages/Advocacy';
 import ArtistDashboard from './pages/ArtistDashboard';
 import ArtistProfile from './pages/ArtistProfile';
 import Artists from './pages/Artists';
 import CollectorDashboard from './pages/CollectorDashboard';
+import Courses from './pages/Courses';
+import CreatorAddListing from './pages/CreatorAddListing';
+import CreatorDashboard from './pages/CreatorDashboard';
 import Discover from './pages/Discover';
+import LandFood from './pages/LandFood';
+import Language from './pages/Language';
+import Materials from './pages/Materials';
 import Mint from './pages/Mint';
 import NFTDetail from './pages/NFTDetail';
 import PhysicalMarket from './pages/PhysicalMarket';
-import Courses from './pages/Courses';
 import Services from './pages/Services';
-import Tourism from './pages/Tourism';
-import Language from './pages/Language';
-import LandFood from './pages/LandFood';
-import Materials from './pages/Materials';
-import Advocacy from './pages/Advocacy';
-import CreatorDashboard from './pages/CreatorDashboard';
-import CreatorAddListing from './pages/CreatorAddListing';
 import SevaHub from './pages/SevaHub';
 import SevaProject from './pages/SevaProject';
+import Tourism from './pages/Tourism';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "Advocacy": Advocacy,
     "ArtistDashboard": ArtistDashboard,
     "ArtistProfile": ArtistProfile,
     "Artists": Artists,
     "CollectorDashboard": CollectorDashboard,
+    "Courses": Courses,
+    "CreatorAddListing": CreatorAddListing,
+    "CreatorDashboard": CreatorDashboard,
     "Discover": Discover,
+    "LandFood": LandFood,
+    "Language": Language,
+    "Materials": Materials,
     "Mint": Mint,
     "NFTDetail": NFTDetail,
     "PhysicalMarket": PhysicalMarket,
-    "Courses": Courses,
     "Services": Services,
-    "Tourism": Tourism,
-    "Language": Language,
-    "LandFood": LandFood,
-    "Materials": Materials,
-    "Advocacy": Advocacy,
-    "CreatorDashboard": CreatorDashboard,
-    "CreatorAddListing": CreatorAddListing,
     "SevaHub": SevaHub,
     "SevaProject": SevaProject,
+    "Tourism": Tourism,
 }
 
 export const pagesConfig = {

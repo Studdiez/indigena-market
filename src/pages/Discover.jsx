@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
+import { nftApi } from "@/components/api/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import { Search, TrendingUp, Flame, Clock, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";

@@ -2,145 +2,429 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { nftApi } from "@/components/api/apiClient";
 import { useQuery } from "@tanstack/react-query";
-import { Search, TrendingUp, Flame, Clock, SlidersHorizontal } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
 import { motion } from "framer-motion";
+import {
+  Paintbrush, Package, GraduationCap, Handshake, HeartHandshake,
+  Mountain, BookOpen, TreePine, Scale, Wrench,
+  Home, Search, Heart, User, ChevronRight, Star
+} from "lucide-react";
 import NFTCard from "@/components/shared/NFTCard";
-import CultureFilter from "@/components/shared/CultureFilter";
-import EmptyState from "@/components/shared/EmptyState";
 
-const sortOptions = [
-  { value: "-created_date", label: "Newest", icon: Clock },
-  { value: "-views", label: "Most Viewed", icon: TrendingUp },
-  { value: "-wishlist_count", label: "Most Loved", icon: Flame },
+const PILLARS = [
+  { icon: Paintbrush,    label: "DIGITAL ARTS",     page: "Discover" },
+  { icon: Package,       label: "PHYSICAL ITEMS",   page: "PhysicalMarket" },
+  { icon: GraduationCap, label: "COURSES",           page: "Courses" },
+  { icon: Handshake,     label: "FREELANCING",       page: "Services" },
+  { icon: HeartHandshake,label: "SEVA GIVING",       page: "SevaHub" },
+  { icon: Mountain,      label: "CULTURAL TOURISM",  page: "Tourism" },
+  { icon: BookOpen,      label: "HERITAGE",          page: "Language" },
+  { icon: TreePine,      label: "LAND & FOOD",       page: "LandFood" },
+  { icon: Scale,         label: "ADVOCACY",          page: "Advocacy" },
+  { icon: Wrench,        label: "MATERIALS",         page: "Materials" },
 ];
 
+const FEATURED_ARTIST = {
+  name: "Aunty Rosie",
+  nation: "Arrernte Nation",
+  image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80",
+  artworkImage: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&q=80",
+  artworkPrice: "$350",
+  artworkTitle: "Sacred Dreamtime Weaving",
+};
+
+const FEATURED_ARTWORKS = [
+  {
+    image: "https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?w=400&q=80",
+    title: "Ochre Songlines",
+    price: "$120",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80",
+    title: "Woven Ceremony Vessel",
+    price: "$350",
+  },
+];
+
+function PillarIcon({ pillar, index }) {
+  const Icon = pillar.icon;
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: index * 0.05, duration: 0.3 }}
+      className="flex flex-col items-center gap-2"
+    >
+      <Link to={createPageUrl(pillar.page)}>
+        <div
+          className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+          style={{
+            background: "radial-gradient(circle at 35% 35%, #C42020, #8B0000)",
+            boxShadow: "0 4px 16px rgba(181,29,25,0.45), inset 0 1px 1px rgba(255,255,255,0.12)",
+          }}
+        >
+          <Icon className="w-6 h-6" style={{ color: "#FDB910", strokeWidth: 1.5 }} />
+        </div>
+      </Link>
+      <span className="text-[9px] font-semibold tracking-wide text-center leading-tight"
+        style={{ color: "#9CA3AF", maxWidth: 60 }}>
+        {pillar.label}
+      </span>
+    </motion.div>
+  );
+}
+
 export default function Discover() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [cultureFilter, setCultureFilter] = useState("all");
-  const [sortBy, setSortBy] = useState("-created_date");
-  const [priceRange, setPriceRange] = useState("all");
+  const [activeTab, setActiveTab] = useState("home");
 
   const { data: nfts = [], isLoading } = useQuery({
-    queryKey: ["nfts", cultureFilter, sortBy],
+    queryKey: ["nfts-gallery"],
     queryFn: async () => {
-      // Try custom backend first, fall back to Base44 DB
       try {
         const data = await nftApi.getAll();
         let results = Array.isArray(data) ? data : (data.nfts || data.data || []);
-        results = results.filter(n => n.status === "listed");
-        if (cultureFilter !== "all") results = results.filter(n => n.culture === cultureFilter);
-        return results;
+        return results.filter(n => n.status === "listed").slice(0, 9);
       } catch {
-        const filter = { status: "listed" };
-        if (cultureFilter !== "all") filter.culture = cultureFilter;
-        return base44.entities.NFT.filter(filter, sortBy, 50);
+        return base44.entities.NFT.filter({ status: "listed" }, "-created_date", 9);
       }
     },
   });
 
-  const filteredNfts = nfts.filter((nft) => {
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      return (
-        nft.title?.toLowerCase().includes(q) ||
-        nft.artist_name?.toLowerCase().includes(q) ||
-        nft.cultural_tags?.some((t) => t.toLowerCase().includes(q))
-      );
-    }
-    return true;
-  }).filter((nft) => {
-    if (priceRange === "all") return true;
-    if (priceRange === "low") return nft.price_indi <= 100;
-    if (priceRange === "mid") return nft.price_indi > 100 && nft.price_indi <= 1000;
-    if (priceRange === "high") return nft.price_indi > 1000;
-    return true;
-  });
+  const galleryImages = [
+    "https://images.unsplash.com/photo-1578301978162-7aae4d755744?w=300&q=80",
+    "https://images.unsplash.com/photo-1571843439991-dd2b8e051966?w=300&q=80",
+    "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=300&q=80",
+    "https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?w=300&q=80",
+    "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&q=80",
+    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80",
+    "https://images.unsplash.com/photo-1565299715199-866c917206bb?w=300&q=80",
+    "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&q=80",
+    "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=300&q=80",
+  ];
 
   return (
-    <div className="p-6 lg:p-10 max-w-7xl mx-auto">
-      {/* Hero */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-10"
+    <div
+      className="min-h-screen pb-24 relative"
+      style={{ background: "#1A1A1A", maxWidth: 480, margin: "0 auto" }}
+    >
+      {/* ── HEADER ── */}
+      <div
+        className="relative flex flex-col items-center pt-10 pb-6 px-4"
+        style={{
+          background: "radial-gradient(ellipse at 50% -10%, rgba(181,29,25,0.28) 0%, transparent 70%)",
+        }}
       >
-        <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
-          Discover Indigenous
-          <span className="block text-[#B51D19]">Digital Art</span>
-        </h1>
-        <p className="text-gray-400 mt-3 text-lg max-w-xl">
-          Collect NFTs from Māori, Aboriginal, and Pacific Islander creators. Every purchase supports cultural preservation.
-        </p>
-      </motion.div>
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mb-4"
+        >
+          <img
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699cf7df7e22f660eaef5fef/db82cb548_20260227_1609_ImageGeneration_remix_01kjesnncsemysz061pv9twty3.png"
+            alt="Indigena Market Logo"
+            className="w-24 h-24 object-contain drop-shadow-2xl"
+          />
+        </motion.div>
 
-      {/* Search & Filters */}
-      <div className="space-y-4 mb-8">
-        <div className="flex gap-3 flex-wrap">
-          <div className="relative flex-1 min-w-[240px]">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-            <Input
-              placeholder="Search art, artists, cultures..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-[#242424] border-[#333] text-white placeholder:text-gray-600 h-11 rounded-xl"
-            />
-          </div>
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-44 bg-[#242424] border-[#333] text-white h-11 rounded-xl">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-[#242424] border-[#333]">
-              {sortOptions.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value} className="text-white">
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={priceRange} onValueChange={setPriceRange}>
-            <SelectTrigger className="w-40 bg-[#242424] border-[#333] text-white h-11 rounded-xl">
-              <SelectValue placeholder="Price" />
-            </SelectTrigger>
-            <SelectContent className="bg-[#242424] border-[#333]">
-              <SelectItem value="all" className="text-white">All Prices</SelectItem>
-              <SelectItem value="low" className="text-white">Under 100 INDI</SelectItem>
-              <SelectItem value="mid" className="text-white">100–1,000 INDI</SelectItem>
-              <SelectItem value="high" className="text-white">1,000+ INDI</SelectItem>
-            </SelectContent>
-          </Select>
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-3xl font-black tracking-widest uppercase text-center"
+          style={{ color: "#B51D19", fontFamily: "serif", letterSpacing: "0.18em" }}
+        >
+          INDIGENA MARKET
+        </motion.h1>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="flex items-center gap-2 mt-1"
+        >
+          <span style={{ color: "#FDB910", fontSize: 11, letterSpacing: "0.25em" }}>—</span>
+          <span className="text-sm font-semibold tracking-[0.3em] italic"
+            style={{ color: "#FDB910" }}>Marketplace</span>
+          <span style={{ color: "#FDB910", fontSize: 11, letterSpacing: "0.25em" }}>—</span>
+        </motion.div>
+
+        {/* Gold divider */}
+        <div className="flex items-center gap-2 mt-4">
+          <div className="w-8 h-px" style={{ background: "#FDB910" }} />
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#FDB910" }} />
+          <div className="w-8 h-px" style={{ background: "#FDB910" }} />
         </div>
-        <CultureFilter value={cultureFilter} onChange={setCultureFilter} />
       </div>
 
-      {/* Grid */}
-      {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {Array(8).fill(0).map((_, i) => (
-            <div key={i} className="rounded-2xl bg-[#242424] border border-[#333] animate-pulse">
-              <div className="aspect-square bg-[#2E2E2E] rounded-t-2xl" />
-              <div className="p-4 space-y-3">
-                <div className="h-3 bg-[#2E2E2E] rounded w-1/3" />
-                <div className="h-4 bg-[#2E2E2E] rounded w-2/3" />
-                <div className="h-3 bg-[#2E2E2E] rounded w-1/2" />
-              </div>
+      {/* ── TEN PILLARS ── */}
+      <section className="px-5 py-4">
+        <SectionHeader title="THE TEN PILLARS" subtitle="" compact />
+        <div className="grid grid-cols-5 gap-3 mt-5">
+          {PILLARS.map((p, i) => (
+            <PillarIcon key={p.label} pillar={p} index={i} />
+          ))}
+        </div>
+      </section>
+
+      {/* Gold divider */}
+      <Divider />
+
+      {/* ── FEATURED ARTIST ── */}
+      <section className="px-5 py-4">
+        <SectionHeader title="FEATURED ARTIST" subtitle="Artist of the Month" linkPage="Artists" />
+
+        <div className="flex gap-3 mt-4">
+          {/* Artist portrait */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="relative rounded-2xl overflow-hidden flex-1"
+            style={{ aspectRatio: "3/4", minHeight: 200 }}
+          >
+            <img
+              src={FEATURED_ARTIST.image}
+              alt={FEATURED_ARTIST.name}
+              className="w-full h-full object-cover"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)",
+              }}
+            />
+            <div className="absolute bottom-3 left-3 right-3">
+              <p className="text-white font-bold text-lg leading-tight">{FEATURED_ARTIST.name}</p>
+              <p className="text-xs mt-0.5" style={{ color: "#FDB910" }}>{FEATURED_ARTIST.nation}</p>
+              <Link to={createPageUrl("Artists")}>
+                <button
+                  className="mt-2 px-3 py-1 rounded-full text-xs font-semibold border"
+                  style={{ borderColor: "#FDB910", color: "#FDB910", background: "rgba(0,0,0,0.4)" }}
+                >
+                  View Profile
+                </button>
+              </Link>
             </div>
+          </motion.div>
+
+          {/* Featured artwork */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="relative rounded-2xl overflow-hidden flex-1"
+            style={{ aspectRatio: "3/4", minHeight: 200 }}
+          >
+            <img
+              src={FEATURED_ARTIST.artworkImage}
+              alt={FEATURED_ARTIST.artworkTitle}
+              className="w-full h-full object-cover"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%)",
+              }}
+            />
+            <div className="absolute bottom-3 right-3">
+              <span
+                className="px-3 py-1 rounded-full text-sm font-bold"
+                style={{ background: "rgba(181,29,25,0.9)", color: "#FDB910" }}
+              >
+                {FEATURED_ARTIST.artworkPrice}
+              </span>
+            </div>
+            <div className="absolute bottom-10 left-3 right-3">
+              <p className="text-white text-xs leading-snug">{FEATURED_ARTIST.artworkTitle}</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Gold divider */}
+      <Divider />
+
+      {/* ── FEATURED ARTWORK ── */}
+      <section className="px-5 py-4">
+        <SectionHeader title="FEATURED ARTWORK" subtitle="Curated for you" linkPage="Discover" />
+
+        <div className="flex gap-3 mt-4">
+          {FEATURED_ARTWORKS.map((art, i) => (
+            <motion.div
+              key={art.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * i }}
+              className="relative rounded-xl overflow-hidden flex-1"
+              style={{ aspectRatio: "1/1" }}
+            >
+              <img
+                src={art.image}
+                alt={art.title}
+                className="w-full h-full object-cover"
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)",
+                }}
+              />
+              <div className="absolute bottom-2 left-2 right-2 flex items-end justify-between">
+                <p className="text-white text-xs font-medium leading-tight max-w-[60%]">{art.title}</p>
+                <span
+                  className="px-2 py-0.5 rounded-full text-xs font-bold"
+                  style={{ background: "rgba(181,29,25,0.9)", color: "#FDB910" }}
+                >
+                  {art.price}
+                </span>
+              </div>
+            </motion.div>
           ))}
         </div>
-      ) : filteredNfts.length === 0 ? (
-        <EmptyState
-          icon={Search}
-          title="No NFTs found"
-          description="Try adjusting your search or filters to discover more indigenous digital art."
-        />
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filteredNfts.map((nft, i) => (
-            <NFTCard key={nft.id} nft={nft} index={i} />
+      </section>
+
+      {/* Gold divider */}
+      <Divider />
+
+      {/* ── GALLERY ── */}
+      <section className="px-5 py-4">
+        <SectionHeader title="GALLERY" subtitle="Browse all" linkPage="Discover" />
+
+        <div className="grid grid-cols-3 gap-2 mt-4">
+          {(isLoading ? [] : nfts.length > 0 ? nfts : galleryImages).map((item, i) => {
+            const imgUrl = typeof item === "string" ? item : item.image_url;
+            const price = typeof item === "string" ? null : item.price_indi;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.04 }}
+                className="relative rounded-xl overflow-hidden"
+                style={{ aspectRatio: "1/1" }}
+              >
+                <img
+                  src={imgUrl || galleryImages[i % galleryImages.length]}
+                  alt=""
+                  className="w-full h-full object-cover"
+                  onError={(e) => { e.target.src = galleryImages[i % galleryImages.length]; }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%)",
+                  }}
+                />
+                {price && (
+                  <div className="absolute bottom-1.5 right-1.5">
+                    <span
+                      className="px-1.5 py-0.5 rounded-full text-[9px] font-bold"
+                      style={{ background: "rgba(181,29,25,0.9)", color: "#FDB910" }}
+                    >
+                      {price} INDI
+                    </span>
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
+
+          {/* Loading skeletons */}
+          {isLoading && Array(9).fill(0).map((_, i) => (
+            <div
+              key={i}
+              className="rounded-xl animate-pulse"
+              style={{ aspectRatio: "1/1", background: "#242424" }}
+            />
           ))}
         </div>
+
+        {/* View All */}
+        <Link to={createPageUrl("Discover")}>
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            className="w-full mt-4 py-3 rounded-full text-sm font-semibold border flex items-center justify-center gap-2"
+            style={{ borderColor: "#FDB910", color: "#FDB910", background: "transparent" }}
+          >
+            View All <ChevronRight className="w-4 h-4" />
+          </motion.button>
+        </Link>
+      </section>
+
+      {/* ── BOTTOM NAV ── */}
+      <nav
+        className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full flex items-center justify-around px-6 py-3 z-50 border-t"
+        style={{
+          maxWidth: 480,
+          background: "rgba(20,20,20,0.97)",
+          backdropFilter: "blur(20px)",
+          borderColor: "#2A2A2A",
+        }}
+      >
+        {[
+          { icon: Home, label: "Home", tab: "home", page: "Discover" },
+          { icon: Search, label: "Search", tab: "search", page: "Discover" },
+          { icon: Heart, label: "Saved", tab: "saved", page: "Discover" },
+          { icon: User, label: "Profile", tab: "profile", page: "ArtistProfile" },
+        ].map(({ icon: Icon, label, tab, page }) => (
+          <Link key={tab} to={createPageUrl(page)}>
+            <button
+              onClick={() => setActiveTab(tab)}
+              className="flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-all"
+              style={{ color: activeTab === tab ? "#FDB910" : "#6B7280" }}
+            >
+              <Icon className="w-5 h-5" />
+              <span className="text-[10px] font-medium">{label}</span>
+            </button>
+          </Link>
+        ))}
+      </nav>
+    </div>
+  );
+}
+
+function SectionHeader({ title, subtitle, linkPage, compact }) {
+  return (
+    <div className={`flex items-start justify-between ${compact ? "" : ""}`}>
+      <div>
+        <h2
+          className="text-base font-black tracking-widest uppercase"
+          style={{ color: "#B51D19", letterSpacing: "0.18em" }}
+        >
+          {title}
+        </h2>
+        {subtitle && (
+          <div className="flex items-center gap-1.5 mt-0.5">
+            <span style={{ color: "#FDB910", fontSize: 10 }}>—</span>
+            <span className="text-xs italic tracking-widest" style={{ color: "#FDB910" }}>
+              {subtitle}
+            </span>
+            <span style={{ color: "#FDB910", fontSize: 10 }}>—</span>
+          </div>
+        )}
+      </div>
+      {linkPage && (
+        <Link to={createPageUrl(linkPage)}>
+          <span className="text-xs font-medium" style={{ color: "#6B7280" }}>View All</span>
+        </Link>
       )}
+    </div>
+  );
+}
+
+function Divider() {
+  return (
+    <div className="flex items-center justify-center gap-2 my-2 px-5">
+      <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, #333)" }} />
+      <div className="flex items-center gap-1">
+        <div className="w-1 h-1 rounded-full" style={{ background: "#FDB910", opacity: 0.5 }} />
+        <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#FDB910", opacity: 0.8 }} />
+        <div className="w-1 h-1 rounded-full" style={{ background: "#FDB910", opacity: 0.5 }} />
+      </div>
+      <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, #333)" }} />
     </div>
   );
 }

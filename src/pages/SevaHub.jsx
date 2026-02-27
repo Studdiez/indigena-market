@@ -33,10 +33,18 @@ export default function SevaHub() {
 
   const { data: projects = [], isLoading } = useQuery({
     queryKey: ["seva-projects", categoryFilter],
-    queryFn: () => {
-      const filter = { status: "active" };
-      if (categoryFilter !== "all") filter.category = categoryFilter;
-      return base44.entities.SEVAProject.filter(filter, "-created_date", 50);
+    queryFn: async () => {
+      try {
+        const data = await sevaApi.getProjects();
+        let results = Array.isArray(data) ? data : (data.projects || data.data || []);
+        results = results.filter(p => p.status === "active");
+        if (categoryFilter !== "all") results = results.filter(p => p.category === categoryFilter);
+        return results;
+      } catch {
+        const filter = { status: "active" };
+        if (categoryFilter !== "all") filter.category = categoryFilter;
+        return base44.entities.SEVAProject.filter(filter, "-created_date", 50);
+      }
     },
   });
 

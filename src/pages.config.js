@@ -65,6 +65,7 @@ import Services from './pages/Services';
 import SevaHub from './pages/SevaHub';
 import SevaProject from './pages/SevaProject';
 import Tourism from './pages/Tourism';
+import Discover from './pages/Discover';
 import __Layout from './Layout.jsx';
 
 
@@ -87,6 +88,7 @@ export const PAGES = {
     "SevaHub": SevaHub,
     "SevaProject": SevaProject,
     "Tourism": Tourism,
+    "Discover": Discover,
 }
 
 export const pagesConfig = {

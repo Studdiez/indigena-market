@@ -159,9 +159,9 @@ export default function Discover() {
           <span style={{ color: "#c8952a", fontSize: 11 }}>—</span>
         </motion.div>
         <div className="flex items-center gap-2 mt-4">
-          <div className="w-8 h-px" style={{ background: "#FDB910" }} />
-          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#FDB910" }} />
-          <div className="w-8 h-px" style={{ background: "#FDB910" }} />
+          <div className="w-8 h-px" style={{ background: "linear-gradient(90deg, #c8952a, #f5d67a)" }} />
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: "linear-gradient(135deg, #f5d67a, #c8952a)" }} />
+          <div className="w-8 h-px" style={{ background: "linear-gradient(90deg, #f5d67a, #c8952a)" }} />
         </div>
       </div>
 

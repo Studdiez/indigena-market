@@ -24,10 +24,19 @@ export default function Discover() {
 
   const { data: nfts = [], isLoading } = useQuery({
     queryKey: ["nfts", cultureFilter, sortBy],
-    queryFn: () => {
-      const filter = { status: "listed" };
-      if (cultureFilter !== "all") filter.culture = cultureFilter;
-      return base44.entities.NFT.filter(filter, sortBy, 50);
+    queryFn: async () => {
+      // Try custom backend first, fall back to Base44 DB
+      try {
+        const data = await nftApi.getAll();
+        let results = Array.isArray(data) ? data : (data.nfts || data.data || []);
+        results = results.filter(n => n.status === "listed");
+        if (cultureFilter !== "all") results = results.filter(n => n.culture === cultureFilter);
+        return results;
+      } catch {
+        const filter = { status: "listed" };
+        if (cultureFilter !== "all") filter.culture = cultureFilter;
+        return base44.entities.NFT.filter(filter, sortBy, 50);
+      }
     },
   });
 

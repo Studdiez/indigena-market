@@ -66,9 +66,35 @@ export default function Mint() {
         wishlist_count: 0,
         total_sales: 0,
       };
-      return base44.entities.NFT.create(nftData);
+
+      // 1. Create NFT record in Base44 DB
+      const created = await base44.entities.NFT.create(nftData);
+
+      // 2. Also create in custom backend
+      try {
+        await nftApi.create({ ...nftData, base44_id: created.id });
+      } catch (e) {
+        console.warn("Custom backend create-nft failed, continuing:", e.message);
+      }
+
+      // 3. Mint on XRPL if wallet address present
+      if (artist?.wallet_address) {
+        try {
+          await xrplApi.mint({
+            nft_id: created.id,
+            wallet_address: artist.wallet_address,
+            title: nftData.title,
+            royalty_percent: nftData.royalty_percent,
+            uri: nftData.image_url,
+          });
+        } catch (e) {
+          console.warn("XRPL mint failed, continuing:", e.message);
+        }
+      }
+
+      return created;
     },
-    onSuccess: () => setStep(5), // success step
+    onSuccess: () => setStep(5),
   });
 
   const handleFileUpload = async (e) => {

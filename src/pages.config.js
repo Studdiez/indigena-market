@@ -55,7 +55,6 @@ import CollectorDashboard from './pages/CollectorDashboard';
 import Courses from './pages/Courses';
 import CreatorAddListing from './pages/CreatorAddListing';
 import CreatorDashboard from './pages/CreatorDashboard';
-import Discover from './pages/Discover';
 import LandFood from './pages/LandFood';
 import Language from './pages/Language';
 import Materials from './pages/Materials';
@@ -78,7 +77,6 @@ export const PAGES = {
     "Courses": Courses,
     "CreatorAddListing": CreatorAddListing,
     "CreatorDashboard": CreatorDashboard,
-    "Discover": Discover,
     "LandFood": LandFood,
     "Language": Language,
     "Materials": Materials,
@@ -92,7 +90,7 @@ export const PAGES = {
 }
 
 export const pagesConfig = {
-    mainPage: "Discover",
+    mainPage: "Advocacy",
     Pages: PAGES,
     Layout: __Layout,
 };

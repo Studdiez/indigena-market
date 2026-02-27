@@ -63,7 +63,7 @@ export default function Layout({ children, currentPageName }) {
             </div>
             <div>
               <h1 className="text-lg font-bold tracking-tight">Indigena</h1>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#FDB910] font-medium">Market</p>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-medium" style={{ background: "linear-gradient(135deg, #c8952a, #f5d67a, #fdb910, #e8a800, #c8952a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Market</p>
             </div>
           </Link>
         </div>

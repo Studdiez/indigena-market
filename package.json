@@ -4,8 +4,11 @@
   "description": "Indigena.",
   "main": "server.js",
   "scripts": {
+    "dev": "npm --prefix global-market install && npm --prefix global-market run dev -- --hostname 0.0.0.0",
+    "build": "npm --prefix global-market install && npm --prefix global-market run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "npm --prefix global-market run start",
+    "start:api": "node server.js",
     "loadtest:k6:smoke": "k6 run scripts/load/k6-marketplace-smoke.js",
     "loadtest:k6:tourism-peak": "k6 run scripts/load/k6-tourism-peak.js",
     "test:e2e:tourism": "node scripts/e2e/tourism-booking-flow.js",

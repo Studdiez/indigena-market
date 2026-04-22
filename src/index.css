@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 28 15% 10%;
+    --foreground: 40 30% 90%;
+
+    --card: 28 12% 14%;
+    --card-foreground: 40 30% 90%;
+
+    --popover: 28 12% 14%;
+    --popover-foreground: 40 30% 90%;
+
+    --primary: 42 80% 55%;
+    --primary-foreground: 28 15% 10%;
+
+    --secondary: 28 15% 20%;
+    --secondary-foreground: 40 30% 90%;
+
+    --muted: 28 10% 20%;
+    --muted-foreground: 40 15% 60%;
+
+    --accent: 42 60% 40%;
+    --accent-foreground: 40 30% 90%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 40 30% 90%;
+
+    --border: 28 15% 22%;
+    --input: 28 15% 22%;
+    --ring: 42 80% 55%;
+
+    --radius: 0.5rem;
+
+    --font-cinzel: 'Cinzel', serif;
+    --font-inter: 'Inter', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #c9a84c 0%, #f5d78e 40%, #c9a84c 70%, #a07830 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #c9a84c 0%, #f5d78e 50%, #a07830 100%);
+}
+
+.stone-texture {
+  background-color: hsl(var(--background));
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}

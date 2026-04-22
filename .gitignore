@@ -71,12 +71,21 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.local
+.env.*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
 # Next.js build output
 .next
+.turbo
+.vercel
+.runtime
+.audit-shots
+playwright-report/
+test-results/
+.data/
 
 # Nuxt.js build / generate output
 .nuxt
@@ -102,3 +111,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Expo / React Native local state
+.expo/
+
+# Local tooling state
+.qoder/

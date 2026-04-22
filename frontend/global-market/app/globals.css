@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --wisdom-red: #B51D19;
+  --golden-sun: #FDB910;
+  --deep-earth: #1A1A1A;
+  --surface: #242424;
+  --border-dim: #333333;
+}
+
+body {
+  background-color: var(--deep-earth);
+  color: white;
+}
+
+.gradient-red {
+  background: linear-gradient(135deg, var(--wisdom-red), #8B1515);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, var(--golden-sun), #E5A200);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--deep-earth);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dim);
+  border-radius: 3px;
+}

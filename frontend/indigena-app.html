@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indigena Market</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1A1A1A;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Two Doors Page */
+        #two-doors {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 36px;
+        }
+        
+        .brand h1 {
+            font-size: 32px;
+            margin-bottom: 4px;
+        }
+        
+        .brand p {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #FDB910;
+        }
+        
+        .doors {
+            width: 100%;
+            max-width: 360px;
+            margin-top: 48px;
+        }
+        
+        .door-btn {
+            width: 100%;
+            padding: 32px 24px;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: transform 0.2s;
+        }
+        
+        .door-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .door-btn.create {
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+        }
+        
+        .door-btn.explore {
+            background: linear-gradient(135deg, #FDB910 0%, #D4A017 100%);
+        }
+        
+        .door-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+        }
+        
+        .door-btn h3 {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .door-btn p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Creator Hub */
+        #creator-hub {
+            padding-bottom: 80px;
+        }
+        
+        .offline-banner {
+            background: #2A2A2A;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .offline-banner .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #EF4444;
+            box-shadow: 0 0 8px #EF4444;
+        }
+        
+        header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        header h1 {
+            font-size: 18px;
+        }
+        
+        header p {
+            font-size: 12px;
+            color: #9CA3AF;
+            margin-top: 4px;
+        }
+        
+        .wallet-card {
+            background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px;
+            border: 1px solid #333;
+        }
+        
+        .wallet-card h3 {
+            font-size: 14px;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .wallet-card .balance {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .btn-red {
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+            color: white;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, #FDB910 0%, #D4A017 100%);
+            color: white;
+        }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 0 24px 24px;
+        }
+        
+        .action-item {
+            background: #2A2A2A;
+            border-radius: 12px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .action-item.red {
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+        }
+        
+        .action-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .action-label {
+            font-size: 12px;
+        }
+        
+        .record-btn {
+            display: block;
+            width: calc(100% - 48px);
+            margin: 0 24px 24px;
+            padding: 20px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1A1A1A;
+            border-top: 1px solid #333;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .nav-item {
+            background: none;
+            border: none;
+            color: #6B7280;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .nav-item.active {
+            color: #B51D19;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+        }
+        
+        /* Global Market */
+        #global-market {
+            padding-bottom: 80px;
+        }
+        
+        .search-bar {
+            flex: 1;
+            margin: 0 16px;
+            background: #2A2A2A;
+            border-radius: 24px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+        
+        .hero {
+            padding: 32px 24px;
+            text-align: center;
+            background: linear-gradient(180deg, #2A2A2A 0%, #1A1A1A 100%);
+        }
+        
+        .hero-quote {
+            font-size: 18px;
+            font-style: italic;
+            color: #E0E0E0;
+            margin-bottom: 8px;
+        }
+        
+        .hero-author {
+            color: #9CA3AF;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        
+        .categories {
+            display: flex;
+            gap: 10px;
+            padding: 16px 24px;
+            overflow-x: auto;
+        }
+        
+        .category-pill {
+            padding: 10px 20px;
+            border-radius: 24px;
+            border: none;
+            background: #2A2A2A;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .category-pill.active {
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+        }
+        
+        .section {
+            padding: 0 24px 24px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .section h2 {
+            font-size: 18px;
+        }
+        
+        .view-all {
+            color: #B51D19;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        .artists-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        
+        .artist {
+            text-align: center;
+            min-width: 72px;
+        }
+        
+        .artist-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .artist-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .artist-craft {
+            font-size: 11px;
+            color: #9CA3AF;
+        }
+        
+        .seva-card {
+            background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 100%);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+        
+        .seva-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .seva-header h3 {
+            color: #FDB910;
+            font-size: 16px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+        
+        .progress-fill {
+            width: 74%;
+            height: 100%;
+            background: linear-gradient(90deg, #FDB910 0%, #D4A017 100%);
+            border-radius: 4px;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .product-card {
+            background: #2A2A2A;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .product-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        
+        .product-info {
+            padding: 12px;
+        }
+        
+        .product-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .product-price {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FDB910;
+        }
+        
+        .stories-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .story-card {
+            background: #2A2A2A;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        
+        .story-dot {
+            font-size: 24px;
+            color: #B51D19;
+        }
+        
+        .story-content {
+            flex: 1;
+        }
+        
+        .story-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .story-meta {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+        
+        .cta-card {
+            background: linear-gradient(135deg, #FDB910 0%, #D4A017 100%);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .cta-card h3 {
+            color: #1A1A1A;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .cta-card p {
+            color: #1A1A1A;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .btn-dark {
+            background: #1A1A1A;
+            color: #FDB910;
+        }
+        
+        footer {
+            padding: 24px;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #9CA3AF;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        
+        .copyright {
+            font-size: 12px;
+            color: #6B7280;
+        }
+    </style>
+</head>
+<body>
+    <!-- Two Doors Entry -->
+    <div id="two-doors" class="page active">
+        <div class="brand">
+            <div class="logo">I</div>
+            <h1>Indigena</h1>
+            <p>MARKET</p>
+        </div>
+        
+        <div class="doors">
+            <button class="door-btn create" onclick="showPage('creator-hub')">
+                <div class="door-icon">➕</div>
+                <h3>I'm here to create</h3>
+                <p>Enter the Creator Hub to share your art</p>
+            </button>
+            
+            <button class="door-btn explore" onclick="showPage('global-market')">
+                <div class="door-icon">🔍</div>
+                <h3>I'm here to explore</h3>
+                <p>Enter the Global Market to discover art</p>
+            </button>
+        </div>
+        
+        <p style="margin-top: 32px; color: #6B7280; font-size: 14px;">
+            I need help → Connect with a Digital Champion
+        </p>
+    </div>
+    
+    <!-- Creator Hub -->
+    <div id="creator-hub" class="page">
+        <div class="offline-banner">
+            <span>⚡</span>
+            <div style="flex: 1;">
+                <p style="font-size: 14px; font-weight: 600;">OFFLINE</p>
+                <p style="font-size: 12px; color: #9CA3AF;">Your work is saved. Will upload when connected.</p>
+            </div>
+            <button class="btn" style="background: #4B5563; color: white; font-size: 12px; padding: 8px 16px;">OK</button>
+        </div>
+        
+        <header>
+            <div>
+                <h1>Welcome, Aiyana!</h1>
+                <p>Diné (Navajo) Nation</p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <div class="dot"></div>
+                <button style="width: 40px; height: 40px; border-radius: 50%; border: none; background: #2A2A2A; cursor: pointer;">🔔</button>
+            </div>
+        </header>
+        
+        <div class="wallet-card">
+            <h3>Wallet</h3>
+            <p class="balance">$1,247.50</p>
+            <button class="btn btn-red">Withdraw</button>
+        </div>
+        
+        <div class="action-grid">
+            <div class="action-item red" onclick="alert('Add New')">
+                <div class="action-icon">➕</div>
+                <div class="action-label">Add New</div>
+            </div>
+            <div class="action-item" onclick="alert('My List')">
+                <div class="action-icon">📦</div>
+                <div class="action-label">My List</div>
+            </div>
+            <div class="action-item" onclick="alert('Sales')">
+                <div class="action-icon">💰</div>
+                <div class="action-label">Sales</div>
+            </div>
+            <div class="action-item" onclick="alert('Courses')">
+                <div class="action-icon">🎓</div>
+                <div class="action-label">My Courses</div>
+            </div>
+            <div class="action-item" onclick="alert('Tools')">
+                <div class="action-icon">🛠️</div>
+                <div class="action-label">Tools</div>
+            </div>
+            <div class="action-item" onclick="alert('Help')">
+                <div class="action-icon">❓</div>
+                <div class="action-label">Help</div>
+            </div>
+        </div>
+        
+        <button class="record-btn">
+            <span style="font-size: 20px; margin-right: 8px;">🎙️</span>
+            RECORD NEW ITEM
+        </button>
+        
+        <div style="margin: 0 24px 24px;">
+            <h3 style="font-size: 16px; color: #9CA3AF; margin-bottom: 12px;">☁️ Drafts (Waiting to upload)</h3>
+            <div style="background: #2A2A2A; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px; border: 1px dashed #4B5563;">
+                <div style="width: 60px; height: 60px; border-radius: 8px; background: linear-gradient(135deg, #B51D19 0%, #8B0000 100%); display: flex; align-items: center; justify-content: center; font-size: 28px;">🧶</div>
+                <div style="flex: 1;">
+                    <p style="font-size: 15px; font-weight: 500; margin-bottom: 4px;">Navajo Weaving</p>
+                    <p style="font-size: 13px; color: #9CA3AF;">$450 • Story recorded</p>
+                </div>
+                <span style="font-size: 20px; color: #6B7280;">☁️</span>
+            </div>
+        </div>
+        
+        <nav class="bottom-nav">
+            <button class="nav-item active">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item">
+                <span class="nav-icon">🔍</span>
+                <span class="nav-label">Search</span>
+            </button>
+            <button class="nav-item">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Favorites</span>
+            </button>
+            <button class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Global Market -->
+    <div id="global-market" class="page">
+        <header>
+            <div class="logo" style="width: 40px; height: 40px; border-radius: 12px; font-size: 20px; margin: 0;">I</div>
+            <div class="search-bar">
+                <span>🔍</span>
+                <span>Search art, artists, stories...</span>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button style="width: 40px; height: 40px; border-radius: 50%; border: none; background: #2A2A2A; cursor: pointer;">👤</button>
+                <button style="width: 40px; height: 40px; border-radius: 50%; border: none; background: #2A2A2A; cursor: pointer;">🛒</button>
+            </div>
+        </header>
+        
+        <div class="hero">
+            <p class="hero-quote">"My hands remember what my ancestors made"</p>
+            <p class="hero-author">— Maria, Weaver</p>
+            <button class="btn btn-red" style="font-size: 16px; padding: 16px 32px;">EXPLORE THE COLLECTION</button>
+        </div>
+        
+        <div class="categories">
+            <button class="category-pill active">Digital Art</button>
+            <button class="category-pill">Physical Items</button>
+            <button class="category-pill">Courses</button>
+            <button class="category-pill">Services</button>
+            <button class="category-pill">Tourism</button>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <h2>Featured Artists</h2>
+                <a href="#" class="view-all">View All →</a>
+            </div>
+            <div class="artists-scroll">
+                <div class="artist">
+                    <div class="artist-avatar">M</div>
+                    <div class="artist-name">Maria</div>
+                    <div class="artist-craft">Weaver</div>
+                </div>
+                <div class="artist">
+                    <div class="artist-avatar">E</div>
+                    <div class="artist-name">Eli</div>
+                    <div class="artist-craft">Carver</div>
+                </div>
+                <div class="artist">
+                    <div class="artist-avatar">S</div>
+                    <div class="artist-name">Sam</div>
+                    <div class="artist-craft">Painter</div>
+                </div>
+                <div class="artist">
+                    <div class="artist-avatar">L</div>
+                    <div class="artist-name">Lena</div>
+                    <div class="artist-craft">Bead</div>
+                </div>
+                <div class="artist">
+                    <div class="artist-avatar">K</div>
+                    <div class="artist-name">Kai</div>
+                    <div class="artist-craft">Digital</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="seva-card">
+                <div class="seva-header">
+                    <span>⚡</span>
+                    <h3>SEVA SPOTLIGHT</h3>
+                </div>
+                <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                    <div style="width: 100px; height: 100px; border-radius: 12px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 48px;">📸</div>
+                    <div>
+                        <p style="font-size: 14px; color: #9CA3AF; margin-bottom: 4px;">Community:</p>
+                        <p style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Maasai Women's Center</p>
+                        <p style="font-size: 14px; color: #9CA3AF; margin-bottom: 4px;">Goal: $25,000</p>
+                        <p style="font-size: 14px; color: #FDB910;">Raised: $18,450</p>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <button class="btn btn-gold" style="width: 100%; margin-top: 12px;">DONATE NOW</button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <h2>New This Week</h2>
+                <a href="#" class="view-all">View All →</a>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">🐍</div>
+                    <div class="product-info">
+                        <div class="product-title">Serpent Spirit</div>
+                        <div class="product-price">$45</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">⭕</div>
+                    <div class="product-info">
+                        <div class="product-title">Sacred Cycle</div>
+                        <div class="product-price">$120</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🌅</div>
+                    <div class="product-info">
+                        <div class="product-title">Sunrise Realm</div>
+                        <div class="product-price">$65</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🌍</div>
+                    <div class="product-info">
+                        <div class="product-title">Earth Mother</div>
+                        <div class="product-price">$90</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 style="font-size: 18px; margin-bottom: 16px; color: #B51D19; text-transform: uppercase; letter-spacing: 1px;">Stories From The Land</h2>
+            <div class="stories-list">
+                <div class="story-card">
+                    <span class="story-dot">•</span>
+                    <div class="story-content">
+                        <div class="story-title">How weaving taught me my language</div>
+                        <div class="story-meta">Maria Begay • 5 min read</div>
+                    </div>
+                    <span style="color: #6B7280;">→</span>
+                </div>
+                <div class="story-card">
+                    <span class="story-dot">•</span>
+                    <div class="story-content">
+                        <div class="story-title">The last fluent speaker</div>
+                        <div class="story-meta">Eli Whittaker • 8 min read</div>
+                    </div>
+                    <span style="color: #6B7280;">→</span>
+                </div>
+                <div class="story-card">
+                    <span class="story-dot">•</span>
+                    <div class="story-content">
+                        <div class="story-title">Buying back sacred land</div>
+                        <div class="story-meta">Sam Blackhorse • 6 min read</div>
+                    </div>
+                    <span style="color: #6B7280;">→</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="cta-card">
+                <h3>JOIN THE CIRCLE OF SUPPORT</h3>
+                <p>Monthly giving. Lasting impact.</p>
+                <button class="btn btn-dark">Learn More</button>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Pillars</a>
+                <a href="#">Seva</a>
+                <a href="#">Contact</a>
+            </div>
+            <p class="copyright">© 2024 Indigena Market. Built with respect.</p>
+        </footer>
+        
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="showPage('global-market')">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item">
+                <span class="nav-icon">🔍</span>
+                <span class="nav-label">Browse</span>
+            </button>
+            <button class="nav-item">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Saved</span>
+            </button>
+            <button class="nav-item" onclick="showPage('two-doors')">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
+    </div>
+    
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
